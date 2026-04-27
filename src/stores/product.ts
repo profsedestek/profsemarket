@@ -60,7 +60,7 @@ export const useProductStore = defineStore('product', () => {
   const updateProduct = (id: string, updates: Partial<SingleProduct>) => {
     const index = products.value.findIndex((p) => p.id === id)
     if (index !== -1) {
-      products.value[index] = { ...products.value[index], ...updates }
+      products.value[index] = { ...products.value[index], ...updates } as SingleProduct
     }
   }
 
@@ -88,7 +88,7 @@ export const useProductStore = defineStore('product', () => {
   const updatePackage = (id: string, updates: Partial<ProductPackage>) => {
     const index = packages.value.findIndex((p) => p.id === id)
     if (index !== -1) {
-      packages.value[index] = { ...packages.value[index], ...updates }
+      packages.value[index] = { ...packages.value[index], ...updates } as ProductPackage
     }
   }
 
@@ -171,14 +171,16 @@ export const useProductStore = defineStore('product', () => {
         price: 1499,
         stock: 50,
         category: 'İşletim Sistemi',
+        type: 'single',
       })
 
       addProduct({
         name: 'Microsoft Office 365',
         description: '1 yıllık Microsoft Office 365 aboneliği',
         price: 599,
-        stock: 30,
-        category: 'Yazılım',
+        stock: 100,
+        category: 'Ofis Yazılımı',
+        type: 'single',
       })
 
       addProduct({
@@ -187,6 +189,7 @@ export const useProductStore = defineStore('product', () => {
         price: 399,
         stock: 40,
         category: 'Güvenlik',
+        type: 'single',
       })
 
       addProduct({
@@ -195,6 +198,7 @@ export const useProductStore = defineStore('product', () => {
         price: 2999,
         stock: 20,
         category: 'Donanım',
+        type: 'single',
       })
 
       addProduct({
@@ -203,6 +207,7 @@ export const useProductStore = defineStore('product', () => {
         price: 3499,
         stock: 15,
         category: 'Donanım',
+        type: 'single',
       })
 
       // Barkod sistemi demo ürünleri
@@ -212,6 +217,7 @@ export const useProductStore = defineStore('product', () => {
         price: 4999,
         stock: 10,
         category: 'Manav Barkod Sistemi',
+        type: 'single',
       })
 
       addProduct({
@@ -220,6 +226,7 @@ export const useProductStore = defineStore('product', () => {
         price: 3499,
         stock: 15,
         category: 'Market Barkod Sistemi',
+        type: 'single',
       })
 
       addProduct({
@@ -228,6 +235,7 @@ export const useProductStore = defineStore('product', () => {
         price: 3999,
         stock: 8,
         category: 'Nalbur Barkod Sistemi',
+        type: 'single',
       })
 
       addProduct({
@@ -236,6 +244,7 @@ export const useProductStore = defineStore('product', () => {
         price: 2999,
         stock: 12,
         category: 'Butik Barkod Sistemi',
+        type: 'single',
       })
 
       addProduct({
@@ -244,6 +253,7 @@ export const useProductStore = defineStore('product', () => {
         price: 7999,
         stock: 6,
         category: 'Market Barkod Sistemi',
+        type: 'single',
       })
 
       // Demo paket oluştur
@@ -259,6 +269,7 @@ export const useProductStore = defineStore('product', () => {
           productIds: [prod1.id, prod2.id, prod3.id],
           discount: 15,
           badge: 'popüler',
+          type: 'package',
         })
       }
 
