@@ -1,0 +1,220 @@
+/* Local Manrope Font */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/font/Manrope/static/Manrope-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/font/Manrope/static/Manrope-Medium.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/font/Manrope/static/Manrope-SemiBold.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/font/Manrope/static/Manrope-Bold.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  src: url('/font/Manrope/static/Manrope-ExtraBold.ttf') format('truetype');
+  font-display: swap;
+}
+
+/* Temel Sıfırlama ve Renk Değişkenleri */
+:root {
+  /* Dark Mode (Default) */
+  --bg-color: #1a1a1a;
+  --card-bg: #222222;
+  --accent-color: #3333ff;
+  --text-main: #ffffff;
+  --text-muted: #a0a0a0;
+  --font-family: 'Manrope', sans-serif;
+  --border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Light Mode */
+[data-theme='light'] {
+  --bg-color: #ffffff;
+  --card-bg: #f5f5f5;
+  --accent-color: #3333ff;
+  --text-main: #1a1a1a;
+  --text-muted: #666666;
+  --border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Global Reset: Taşmaları önlemek için kritik */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overflow-x: hidden; /* Yatay kaymayı kesin olarak engeller */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  font-weight: 800;
+  line-height: 1.6;
+  height: 100vh;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  overflow: hidden;
+}
+
+#app {
+  width: 100%;
+  max-width: 1200px;
+  height: 100vh;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Linkler ve Etkileşimli Öğeler */
+a {
+  text-decoration: none;
+  color: var(--accent-color);
+  transition: all 0.3s ease;
+}
+
+/* Tipografi */
+h1,
+h2,
+h3 {
+  margin-top: 0;
+  color: var(--text-main);
+  font-weight: 700;
+  word-wrap: break-word; /* Uzun kelimelerin taşmasını önler */
+}
+
+/* Modern Layout Düzenlemesi */
+.main-content {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  animation: pageLoad 0.5s ease-out;
+}
+
+@keyframes pageLoad {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Kart Yapıları */
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.5rem; /* Mobilde iç boşluk azaltıldı */
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 100%; /* Taşmayı önlemek için */
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Input ve Button Global */
+input,
+button {
+  font-family: var(--font-family);
+  font-weight: 800;
+  max-width: 100%; /* Kendi sınırlarını aşmaması için */
+}
+
+/* --- Responsive Ayarları --- */
+
+/* Büyük Ekranlar (Masaüstü ve Tablet Landscape) */
+@media (min-width: 1024px) {
+  #app {
+    padding: 2rem 4rem;
+  }
+
+  .grid-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+  }
+}
+
+/* Orta Ölçekli Ekranlar (Tablet Portrait) */
+@media (max-width: 1023px) {
+  .grid-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+/* Mobil Ekranlar (Telefon) */
+@media (max-width: 768px) {
+  #app {
+    padding: 0.8rem; /* Kenarlara çok yapışmaması için */
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .main-content {
+    margin-top: 1rem;
+    gap: 1rem;
+  }
+
+  /* Kartların iç boşluğunu mobilde daraltalım */
+  .card {
+    padding: 1.2rem;
+  }
+}
+
+/* Kaydırma Çubuğu Tasarımı */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
