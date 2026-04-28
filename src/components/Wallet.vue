@@ -233,7 +233,7 @@ onMounted(() => {
 
 .info-btn {
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border-radius: 250px;
   border: none;
   background: var(--accent-color);
   color: white;

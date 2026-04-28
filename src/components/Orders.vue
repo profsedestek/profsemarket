@@ -305,7 +305,7 @@ const calculateTotal = () => {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0.8rem;
-  border-radius: 6px;
+  border-radius: 250px;
   border: none;
   font-size: 0.75rem;
   font-weight: 500;
