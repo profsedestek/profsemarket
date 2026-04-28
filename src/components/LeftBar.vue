@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import { useProductStore } from '../stores/product'
 import type { Product } from '../stores/product'
 
 const productStore = useProductStore()
+const router = useRouter()
 const showClearPopup = ref(false)
 
 const formatPrice = (price: number) => {
@@ -35,9 +37,7 @@ const confirmClear = () => {
 }
 
 const goToProduct = (product: Product) => {
-  // Ürün detay sayfasına yönlendirme (ileride eklenebilir)
-  // Şimdilik store sayfasına yönlendirelim
-  window.location.href = '/store'
+  router.push(`/explore/product/${product.id}`)
 }
 </script>
 
@@ -64,11 +64,7 @@ const goToProduct = (product: Product) => {
         <p>Henüz bir ürün görüntülemediniz.</p>
       </div>
 
-      <div
-        v-for="product in productStore.recentlyViewed"
-        :key="product.id"
-        class="history-card"
-      >
+      <div v-for="product in productStore.recentlyViewed" :key="product.id" class="history-card">
         <div class="history-card-image">
           <img :src="getProductImage(product)" :alt="product.name" />
         </div>
