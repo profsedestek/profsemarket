@@ -114,28 +114,8 @@ onMounted(() => {
         <span>Cüzdana para yükle</span>
       </button>
       <button class="action-btn secondary">
-        <Icon icon="material-symbols:remove-circle" />
-        <span>Para çek</span>
-      </button>
-    </div>
-
-    <!-- Bottom Buttons -->
-    <div class="bottom-buttons">
-      <button class="bottom-btn">
-        <Icon icon="material-symbols:discount" />
-        <span>İndirim fişi kullan</span>
-      </button>
-      <button class="bottom-btn">
-        <Icon icon="material-symbols:sell" />
-        <span>Kuponu para çek</span>
-      </button>
-      <button class="bottom-btn">
-        <Icon icon="material-symbols:account-balance" />
-        <span>Para yükle</span>
-      </button>
-      <button class="bottom-btn discount-upload">
-        <Icon icon="material-symbols:upload" />
-        <span>İndirim fişi yükle</span>
+        <Icon icon="material-symbols:remove" />
+        <span>Cüzdandan para çek</span>
       </button>
     </div>
   </div>
