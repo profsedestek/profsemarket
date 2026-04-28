@@ -21,6 +21,7 @@ const searchQuery = ref('')
 const isMenuOpen = ref(false)
 const isHistoryOpen = ref(false)
 const isLogoHovered = ref(false)
+const logoRipples = ref<Array<{ id: number; x: number; y: number }>>([])
 
 const openSearch = () => {
   isSearchOpen.value = true
@@ -49,6 +50,36 @@ const closeMenu = () => {
 const goToAbout = () => {
   router.push('/about')
 }
+
+const createLogoRipple = (event: MouseEvent | TouchEvent) => {
+  const target = event.currentTarget as HTMLElement
+  const rect = target.getBoundingClientRect()
+
+  let clientX: number, clientY: number
+
+  if ('touches' in event) {
+    clientX = event.touches[0].clientX
+    clientY = event.touches[0].clientY
+  } else {
+    clientX = event.clientX
+    clientY = event.clientY
+  }
+
+  const x = clientX - rect.left
+  const y = clientY - rect.top
+
+  const ripple = {
+    id: Date.now(),
+    x,
+    y,
+  }
+
+  logoRipples.value.push(ripple)
+
+  setTimeout(() => {
+    logoRipples.value = logoRipples.value.filter((r) => r.id !== ripple.id)
+  }, 600)
+}
 </script>
 
 <template>
@@ -58,7 +89,13 @@ const goToAbout = () => {
         <button
           class="logo-link"
           @click="goToAbout"
-          @touchstart.passive="goToAbout"
+          @touchstart.passive="
+            (e) => {
+              goToAbout()
+              createLogoRipple(e)
+            }
+          "
+          @mousedown="createLogoRipple"
           @mouseenter="isLogoHovered = true"
           @mouseleave="isLogoHovered = false"
         >
@@ -70,6 +107,14 @@ const goToAbout = () => {
             <img src="/profselong.svg" alt="Profse" class="logo-hover-icon" />
             <span class="logo-text">Mağaza</span>
           </div>
+
+          <!-- Ripple effects -->
+          <div
+            v-for="ripple in logoRipples"
+            :key="ripple.id"
+            class="logo-ripple"
+            :style="{ left: ripple.x + 'px', top: ripple.y + 'px' }"
+          />
         </button>
 
         <div class="nav-right">
@@ -564,6 +609,38 @@ const goToAbout = () => {
 @media (min-width: 769px) {
   .history-drawer-overlay {
     display: none;
+  }
+}
+
+/* Logo Ripple Animation */
+.logo-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-ripple {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(51, 51, 255, 0.6);
+  transform: translate(-50%, -50%) scale(0);
+  animation: logoRipple 0.6s ease-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes logoRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(4);
+    opacity: 0;
   }
 }
 </style>

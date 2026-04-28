@@ -172,7 +172,7 @@ const handleManagePlan = () => {
   background: var(--accent-color);
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 250px;
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
