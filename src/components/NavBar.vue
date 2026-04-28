@@ -22,6 +22,7 @@ const isMenuOpen = ref(false)
 const isHistoryOpen = ref(false)
 const isLogoHovered = ref(false)
 const logoRipples = ref<Array<{ id: number; x: number; y: number }>>([])
+const autoRippleTimer = ref<number | null>(null)
 
 const openSearch = () => {
   isSearchOpen.value = true
@@ -51,27 +52,32 @@ const goToAbout = () => {
   router.push('/about')
 }
 
-const createLogoRipple = (event: MouseEvent | TouchEvent) => {
-  const target = event.currentTarget as HTMLElement
-  const rect = target.getBoundingClientRect()
-
-  let clientX: number, clientY: number
-
-  if ('touches' in event) {
-    clientX = event.touches[0].clientX
-    clientY = event.touches[0].clientY
-  } else {
-    clientX = event.clientX
-    clientY = event.clientY
-  }
-
-  const x = clientX - rect.left
-  const y = clientY - rect.top
-
+const createLogoRipple = (event?: MouseEvent | TouchEvent) => {
   const ripple = {
     id: Date.now(),
-    x,
-    y,
+    x: 15, // Center of 30px logo
+    y: 15,
+  }
+
+  // If event is provided, calculate position from touch/click
+  if (event && event.currentTarget) {
+    const target = event.currentTarget as HTMLElement
+    const rect = target.getBoundingClientRect()
+
+    let clientX: number, clientY: number
+
+    if ('touches' in event && event.touches && event.touches[0]) {
+      clientX = event.touches[0].clientX
+      clientY = event.touches[0].clientY
+    } else if ('clientX' in event && 'clientY' in event) {
+      clientX = event.clientX
+      clientY = event.clientY
+    } else {
+      return // Fallback to center position
+    }
+
+    ripple.x = clientX - rect.left
+    ripple.y = clientY - rect.top
   }
 
   logoRipples.value.push(ripple)
@@ -80,6 +86,19 @@ const createLogoRipple = (event: MouseEvent | TouchEvent) => {
     logoRipples.value = logoRipples.value.filter((r) => r.id !== ripple.id)
   }, 600)
 }
+
+const startAutoRipple = () => {
+  // Create ripple every 3 seconds
+  autoRippleTimer.value = setInterval(() => {
+    createLogoRipple()
+  }, 3000)
+
+  // Create first ripple immediately
+  createLogoRipple()
+}
+
+// Start auto ripple on component mount
+startAutoRipple()
 </script>
 
 <template>
