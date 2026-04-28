@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { Icon } from '@iconify/vue'
+import { useRouter } from 'vue-router'
 import { useProductStore } from '../stores/product'
 import type { Product } from '../stores/product'
+import DetailsPopup from './DetailsPopup.vue'
 
 const productStore = useProductStore()
+const router = useRouter()
 
 const showFilter = ref(false)
-const selectedCategory = ref('Tümü')
+const selectedCategory = ref<string>('Tümü')
+const selectedProduct = ref<Product | null>(null)
+const showDetails = ref(false)
 
 const categories = [
   'Tümü',
@@ -64,6 +69,10 @@ const getProductImage = (product: Product) => {
 
 const closeFilter = () => {
   showFilter.value = false
+}
+
+const openDetails = (product: Product) => {
+  router.push(`/explore/product/${product.id}`)
 }
 </script>
 
@@ -132,6 +141,9 @@ const closeFilter = () => {
         />
         <div class="product-info">
           <h4 class="product-name">{{ product.name }}</h4>
+          <button class="info-btn" @click="openDetails(product)">
+            <Icon icon="material-symbols:info" width="16" height="16" />
+          </button>
           <button class="price-btn">{{ formatPrice(product.price) }}</button>
         </div>
       </div>
@@ -142,6 +154,9 @@ const closeFilter = () => {
       <Icon icon="material-symbols:shopping-bag-outline" width="48" height="48" />
       <p>Bu kategoride ürün bulunamadı.</p>
     </div>
+
+    <!-- Details Popup -->
+    <DetailsPopup v-if="showDetails" :product="selectedProduct" @close="showDetails = false" />
   </div>
 </template>
 
@@ -441,6 +456,26 @@ const closeFilter = () => {
   -webkit-box-orient: vertical;
 }
 
+.info-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(51, 51, 255, 0.1);
+  color: var(--accent-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.info-btn:hover {
+  background: rgba(51, 51, 255, 0.2);
+  transform: scale(1.05);
+}
+
 .price-btn {
   flex-shrink: 0;
   padding: 0.4rem 0.8rem;
@@ -523,6 +558,11 @@ const closeFilter = () => {
 
   .product-name {
     font-size: 0.85rem;
+  }
+
+  .info-btn {
+    width: 24px;
+    height: 24px;
   }
 
   .price-btn {

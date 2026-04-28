@@ -10,6 +10,14 @@ export interface SingleProduct {
   category?: string
   stock: number
   type: 'single'
+  color?: string
+  scent?: string
+  width?: string
+  height?: string
+  depth?: string
+  inch?: string
+  ram?: string
+  battery?: string
 }
 
 export interface ProductPackage {
@@ -22,6 +30,14 @@ export interface ProductPackage {
   discount?: number // Paket indirim yüzdesi
   type: 'package'
   badge?: 'ekonomik' | 'popüler' | 'sınırlı' // Badge türü
+  color?: string
+  scent?: string
+  width?: string
+  height?: string
+  depth?: string
+  inch?: string
+  ram?: string
+  battery?: string
 }
 
 export type Product = SingleProduct | ProductPackage

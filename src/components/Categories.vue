@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { Icon } from '@iconify/vue'
+import { useRouter } from 'vue-router'
 import { useProductStore } from '../stores/product'
 import type { Product } from '../stores/product'
 
 const productStore = useProductStore()
+const router = useRouter()
 
 const selectedCategory = ref('Tümü')
 const sortBy = ref('popular')
@@ -58,7 +60,6 @@ const filteredProducts = computed(() => {
 })
 
 const getCategoryName = (id: string): string => {
-  const cat = categories.find(c => c.id === id)
   if (id === 'all') return 'Tümü'
   if (id === 'os') return 'İşletim Sistemi'
   if (id === 'software') return 'Yazılım'
@@ -79,22 +80,34 @@ const formatPrice = (price: number) => {
   }).format(price)
 }
 
+const openDetails = (product: Product) => {
+  router.push(`/explore/product/${product.id}`)
+}
+
 const getProductImage = (product: Product) => {
   if (product.image) return product.image
   if (product.type === 'package') {
     return 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop'
   }
   const categoryImages: Record<string, string> = {
-    'Manav Barkod Sistemi': 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=400&h=300&fit=crop',
-    'Market Barkod Sistemi': 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=400&h=300&fit=crop',
-    'Nalbur Barkod Sistemi': 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=400&h=300&fit=crop',
-    'Butik Barkod Sistemi': 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=400&h=300&fit=crop',
-    'İşletim Sistemi': 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=400&h=300&fit=crop',
-    'Yazılım': 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop',
-    'Güvenlik': 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=300&fit=crop',
-    'Donanım': 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=400&h=300&fit=crop',
+    'Manav Barkod Sistemi':
+      'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=400&h=300&fit=crop',
+    'Market Barkod Sistemi':
+      'https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=400&h=300&fit=crop',
+    'Nalbur Barkod Sistemi':
+      'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=400&h=300&fit=crop',
+    'Butik Barkod Sistemi':
+      'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=400&h=300&fit=crop',
+    'İşletim Sistemi':
+      'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=400&h=300&fit=crop',
+    Yazılım: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop',
+    Güvenlik: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=300&fit=crop',
+    Donanım: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=400&h=300&fit=crop',
   }
-  return categoryImages[product.category || ''] || 'https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=400&h=300&fit=crop'
+  return (
+    categoryImages[product.category || ''] ||
+    'https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=400&h=300&fit=crop'
+  )
 }
 </script>
 
@@ -139,17 +152,16 @@ const getProductImage = (product: Product) => {
 
     <!-- Products Grid -->
     <div v-if="filteredProducts.length > 0" class="products-grid">
-      <div
-        v-for="product in filteredProducts"
-        :key="product.id"
-        class="product-card"
-      >
+      <div v-for="product in filteredProducts" :key="product.id" class="product-card">
         <div
           class="product-image"
           :style="{ backgroundImage: `url(${getProductImage(product)})` }"
         />
         <div class="product-info">
           <h4 class="product-name">{{ product.name }}</h4>
+          <button class="info-btn" @click="openDetails(product)">
+            <Icon icon="material-symbols:info" width="16" height="16" />
+          </button>
           <button class="price-btn">{{ formatPrice(product.price) }}</button>
         </div>
       </div>
@@ -182,15 +194,15 @@ const getProductImage = (product: Product) => {
 .hero-banner-image {
   position: absolute;
   inset: 0;
-  background:
-    url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=300&fit=crop') center/cover no-repeat;
+  background: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=300&fit=crop')
+    center/cover no-repeat;
 }
 
 .hero-banner-gradient {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(0,0,0,0) 0%, var(--bg-color) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, var(--bg-color) 100%),
     linear-gradient(135deg, rgba(51, 51, 255, 0.15) 0%, transparent 60%);
 }
 
@@ -317,7 +329,7 @@ const getProductImage = (product: Product) => {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.3) 100%);
+  background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.3) 100%);
 }
 
 .product-info {
@@ -339,6 +351,26 @@ const getProductImage = (product: Product) => {
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+.info-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(51, 51, 255, 0.1);
+  color: var(--accent-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.info-btn:hover {
+  background: rgba(51, 51, 255, 0.2);
+  transform: scale(1.05);
 }
 
 .price-btn {
@@ -413,6 +445,11 @@ const getProductImage = (product: Product) => {
 
   .product-name {
     font-size: 0.7rem;
+  }
+
+  .info-btn {
+    width: 24px;
+    height: 24px;
   }
 
   .price-btn {
