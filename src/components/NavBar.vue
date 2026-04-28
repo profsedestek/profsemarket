@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Icon } from '@iconify/vue'
+import { useRouter } from 'vue-router'
 import { useThemeStore } from '../stores/theme'
+
+const router = useRouter()
 
 // App.vue'dan gelen kontrol değişkeni
 defineProps<{
@@ -42,6 +45,10 @@ const toggleMenu = () => {
 const closeMenu = () => {
   isMenuOpen.value = false
 }
+
+const goToAbout = () => {
+  router.push('/about')
+}
 </script>
 
 <template>
@@ -50,7 +57,8 @@ const closeMenu = () => {
       <div v-if="!isSearchOpen" class="nav-content">
         <button
           class="logo-link"
-          @click="$router.push('/about')"
+          @click="goToAbout"
+          @touchstart.passive="goToAbout"
           @mouseenter="isLogoHovered = true"
           @mouseleave="isLogoHovered = false"
         >
