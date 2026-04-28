@@ -234,12 +234,12 @@ const closeMenu = () => {
 
 /* AI Butonu Özel Stili */
 .ai-toggle-btn.is-active {
-  background-color: rgba(255, 0, 204, 0.15);
-  color: #ff00cc;
+  background-color: rgba(51, 51, 255, 0.15);
+  color: #3333ff;
 }
 
 .ai-toggle-btn.is-active:hover {
-  background-color: rgba(255, 0, 204, 0.25);
+  background-color: rgba(51, 51, 255, 0.25);
 }
 
 /* Arama Overlay */
