@@ -163,12 +163,29 @@ const productFeatures = computed(() => {
               class="gallery-image"
             />
             <div class="image-gradient"></div>
-            <button v-if="getProductImages(product).length > 1" class="prev-btn" @click="prevImage">
-              <Icon icon="material-symbols:chevron-left" width="24" height="24" />
-            </button>
-            <button v-if="getProductImages(product).length > 1" class="next-btn" @click="nextImage">
-              <Icon icon="material-symbols:chevron-right" width="24" height="24" />
-            </button>
+            <!-- Left Hover Zone -->
+            <div
+              v-if="getProductImages(product).length > 1"
+              class="nav-zone nav-zone-left"
+              @click="prevImage"
+            >
+              <div class="nav-zone-overlay"></div>
+              <Icon icon="material-symbols:chevron-left" width="32" height="32" class="nav-arrow" />
+            </div>
+            <!-- Right Hover Zone -->
+            <div
+              v-if="getProductImages(product).length > 1"
+              class="nav-zone nav-zone-right"
+              @click="nextImage"
+            >
+              <div class="nav-zone-overlay"></div>
+              <Icon
+                icon="material-symbols:chevron-right"
+                width="32"
+                height="32"
+                class="nav-arrow"
+              />
+            </div>
           </div>
         </div>
 
@@ -442,35 +459,63 @@ const productFeatures = computed(() => {
   pointer-events: none;
 }
 
-.prev-btn,
-.next-btn {
+.nav-zone {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
+  bottom: 0;
+  width: 20%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
   cursor: pointer;
-  transition: all 0.2s ease;
+  z-index: 5;
 }
 
-.prev-btn {
-  left: 1rem;
+.nav-zone-left {
+  left: 0;
+  justify-content: flex-start;
+  padding-left: 1rem;
 }
 
-.next-btn {
-  right: 1rem;
+.nav-zone-right {
+  right: 0;
+  justify-content: flex-end;
+  padding-right: 1rem;
 }
 
-.prev-btn:hover,
-.next-btn:hover {
-  background: rgba(0, 0, 0, 0.8);
+.nav-zone-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.nav-zone-left .nav-zone-overlay {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3) 0%, transparent 100%);
+  opacity: 0;
+}
+
+.nav-zone-right .nav-zone-overlay {
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.3) 0%, transparent 100%);
+  opacity: 0;
+}
+
+.nav-zone:hover .nav-zone-overlay {
+  opacity: 1;
+}
+
+.nav-arrow {
+  color: white;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+  z-index: 6;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.nav-zone:hover .nav-arrow {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .image-dots-top {
