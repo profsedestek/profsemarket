@@ -52,11 +52,23 @@ const navigateTo = (path: string) => {
 const isActive = (routeName: string) => {
   return currentRoute.value === routeName
 }
+
+const activeIndex = computed(() => {
+  return navigationItems.findIndex((item) => item.id === currentRoute.value)
+})
 </script>
 
 <template>
   <nav class="tab-bar">
     <div class="tab-bar-container">
+      <!-- Kaymalı active indicator -->
+      <div
+        class="active-indicator"
+        :style="{
+          transform: `translateX(calc(${activeIndex * 100}% + ${activeIndex * 0.25}rem))`,
+          opacity: activeIndex >= 0 ? 1 : 0,
+        }"
+      />
       <button
         v-for="item in navigationItems"
         :key="item.id"
@@ -128,6 +140,21 @@ const isActive = (routeName: string) => {
   grid-template-columns: repeat(4, 1fr);
   gap: 0.25rem;
   height: 56px;
+  position: relative;
+}
+
+/* Kaymalı active indicator */
+.active-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(25% - 0.1875rem);
+  height: 100%;
+  background: linear-gradient(135deg, var(--accent-color) 0%, rgba(51, 51, 255, 0.8) 100%);
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(51, 51, 255, 0.3);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
 }
 
 .tab-item {
@@ -140,8 +167,9 @@ const isActive = (routeName: string) => {
   border: none;
   color: rgba(255, 255, 255, 0.6);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  z-index: 1;
 }
 
 [data-theme='light'] .tab-item {
@@ -158,9 +186,10 @@ const isActive = (routeName: string) => {
 
 .tab-item.active {
   color: white;
-  background: linear-gradient(135deg, var(--accent-color) 0%, rgba(51, 51, 255, 0.8) 100%);
-  border-radius: 50px;
-  box-shadow: 0 4px 12px rgba(51, 51, 255, 0.3);
+}
+
+[data-theme='light'] .active-indicator {
+  box-shadow: 0 4px 12px rgba(51, 51, 255, 0.2);
 }
 
 .tab-icon {
