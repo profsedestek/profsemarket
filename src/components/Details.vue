@@ -17,6 +17,8 @@ const emit = defineEmits<{
 const productStore = useProductStore()
 const currentImageIndex = ref(0)
 const selectedProductId = ref<string | null>(null)
+const hoverRating = ref(0)
+const currentRating = ref(4.9)
 
 const close = () => {
   emit('close')
@@ -279,7 +281,26 @@ const productFeatures = computed(() => {
               </div>
               <div class="seller-details">
                 <h3 class="seller-name">Profse Destek</h3>
-                <p class="seller-rating">⭐ 4.9 (120+ satış)</p>
+                <div class="seller-rating">
+                  <div class="star-rating" @mouseleave="hoverRating = 0">
+                    <Icon
+                      v-for="n in 5"
+                      :key="n"
+                      :icon="
+                        n <= (hoverRating || Math.floor(currentRating))
+                          ? 'material-symbols:star'
+                          : 'material-symbols:star-outline'
+                      "
+                      width="16"
+                      height="16"
+                      class="star-icon"
+                      :class="{ filled: n <= (hoverRating || Math.floor(currentRating)) }"
+                      @mouseenter="hoverRating = n"
+                      @click="currentRating = n"
+                    />
+                  </div>
+                  <span class="rating-text">{{ currentRating.toFixed(1) }} (120+ satış)</span>
+                </div>
               </div>
             </div>
             <button class="contact-seller-button">
@@ -753,9 +774,37 @@ const productFeatures = computed(() => {
 }
 
 .seller-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 0.9rem;
   color: var(--text-muted);
   margin: 0;
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+}
+
+.star-icon {
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.star-icon.filled {
+  color: #fbbf24;
+}
+
+.star-icon:hover {
+  transform: scale(1.15);
+}
+
+.rating-text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
 
 .contact-seller-button {
