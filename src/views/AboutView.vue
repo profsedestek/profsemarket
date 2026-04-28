@@ -296,7 +296,7 @@ const industries = [
   right: 1.5rem;
   width: 48px;
   height: 48px;
-  border-radius: 50%;
+  border-radius: 0;
   border: 2px solid rgba(51, 51, 255, 0.5);
   background: rgba(0, 0, 0, 0.6);
   color: white;
