@@ -91,13 +91,13 @@ const closeMenu = () => {
                 height="30"
               />
               <div v-if="isMenuOpen" class="menu-popup">
-                <a href="/about" class="menu-item-link" @click.stop="closeMenu">
-                  <Icon icon="material-symbols:info-outline" width="24" height="24" />
-                  <span>Hakkımızda</span>
+                <a href="/notifications" class="menu-item-link" @click.stop="closeMenu">
+                  <Icon icon="material-symbols:notifications" width="24" height="24" />
+                  <span>Bildirimler</span>
                 </a>
-                <a href="/contact" class="menu-item-link" @click.stop="closeMenu">
-                  <Icon icon="ic:baseline-contact-phone" width="24" height="24" />
-                  <span>İletişim</span>
+                <a href="/shipping" class="menu-item-link" @click.stop="closeMenu">
+                  <Icon icon="material-symbols:local-shipping" width="24" height="24" />
+                  <span>Kargolama</span>
                 </a>
               </div>
             </li>
