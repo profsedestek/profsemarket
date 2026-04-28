@@ -38,7 +38,7 @@ const navigationItems = [
   },
   {
     id: 'basket',
-    name: 'Siparişlerim',
+    name: 'Sipariş',
     icon: 'basket',
     path: '/basket',
     badge: null,

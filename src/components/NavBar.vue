@@ -146,7 +146,7 @@ const closeMenu = () => {
 .navbar {
   max-width: 600px;
   margin: 0 auto;
-  background-color: #222;
+  background-color: transparent;
   color: #fff;
   padding: 0 1rem;
   height: 64px;
@@ -172,7 +172,7 @@ const closeMenu = () => {
 
 /* Light Mode */
 [data-theme='light'] .navbar {
-  background-color: #f5f5f5;
+  background-color: transparent;
   color: #1a1a1a;
 }
 
@@ -248,12 +248,14 @@ const closeMenu = () => {
   align-items: center;
   width: calc(100% + 2rem);
   height: 100%;
-  background-color: #333;
+  background-color: rgba(30, 30, 40, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   position: absolute;
   top: 0;
   left: -1rem;
   padding: 0 1.5rem;
-  border-radius: 12px;
+  border-radius: 250px;
   z-index: 10;
   animation: fadeIn 0.15s ease-out;
   transition: background-color 0.3s ease;
@@ -261,7 +263,7 @@ const closeMenu = () => {
 
 /* Light Mode - search overlay */
 [data-theme='light'] .search-overlay {
-  background-color: #e5e5e5;
+  background-color: rgba(220, 220, 230, 0.9);
 }
 
 @keyframes fadeIn {
