@@ -4,6 +4,7 @@ import Navbar from './components/NavBar.vue'
 import TabBar from './components/TabBar.vue'
 import AiMode from './components/AIMode.vue'
 import LazyLoad from './components/LazyLoad.vue'
+import MouseFollower from './components/MouseFollower.vue'
 import { useThemeStore } from './stores/theme'
 
 const themeStore = useThemeStore()
@@ -34,6 +35,7 @@ onMounted(() => {
 
   <!-- Main App -->
   <div v-else class="app-container">
+    <MouseFollower />
     <Navbar :isAiActive="isAiOpen" @toggleAi="handleAiToggle" />
 
     <Transition name="ai-slide">

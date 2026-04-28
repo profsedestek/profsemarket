@@ -216,11 +216,13 @@ const closeMenu = () => {
 /* Dark Mode - hover */
 .navbar .nav-icon-item:hover {
   background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0;
 }
 
 /* Light Mode - hover */
 [data-theme='light'] .navbar .nav-icon-item:hover {
   background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 0;
 }
 
 /* Theme Toggle Button */
@@ -230,6 +232,7 @@ const closeMenu = () => {
 
 .theme-toggle-btn:hover {
   transform: scale(1.1);
+  border-radius: 0;
 }
 
 /* AI Butonu Özel Stili */
@@ -240,6 +243,7 @@ const closeMenu = () => {
 
 .ai-toggle-btn.is-active:hover {
   background-color: rgba(51, 51, 255, 0.25);
+  border-radius: 0;
 }
 
 /* Arama Overlay */
